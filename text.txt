@@ -1,0 +1,22 @@
+<BrowserRouter>
+    <Routes>
+        <Route path="/" element={<MainLayout/>}>
+        {/* outlet 1k */}
+            <Route index element={<Home/>}/>
+            <Route element={<UserProtected/>}>
+              <Route path="profile" element={<Profile/>}/>
+            </Route>
+            <Route path='cateogry' element={<Category/>}/>
+            <Route path='category/:catedoryId' element={<CategoryItems/>}/>
+            <Route path='category/:catedoryId/:itemId' element={<ItemPage/>}/>
+        
+        </Route>
+        {/* method1
+        <Route path="/login" >
+          <Route index element={<Login/>}/>
+        </Route> */}
+        {/* method 2 */}
+        
+        <Route path="login" element={<Login/>} />
+     </Routes>
+    </BrowserRouter>
