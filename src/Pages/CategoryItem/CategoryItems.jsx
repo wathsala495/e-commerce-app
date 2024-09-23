@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { categorySelector } from '../../store/ReduxSlice/categorySlice'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Rating from '@mui/material/Rating';
 import {  ListItemButton } from '@mui/material';
 import getDataFromSubCollection from '../../Utils/dataFetch/getDataFromSubCollection';
@@ -33,9 +33,10 @@ const CategoryItems = () => {
     <div className="py-[100px] sm:px-12 md:px-[120px] px-5 w-full h-screen overflow-y-scroll">
      <h1 className='ml-3 font-bold text-lg mt-2 mb-3 md:text-2xl '> {catagoryTitle.title}</h1>
     <div className='w-full grid grid-cols-2 sm:grid-cols-3 grid-rows[auto] gap-4'>
-    {categoryitemsData.map(({img,title},index)=>{
+    {categoryitemsData.map(({img,title,categoryId
+},index)=>{
         return(
-<CategoryItemUnit imageUrl={img} title={title} key={index}/>
+<CategoryItemUnit imageUrl={img} title={title} key={index} categoryId={categoryId}/>
         )
     })}
     </div>
@@ -45,9 +46,9 @@ const CategoryItems = () => {
 
 export default CategoryItems
 
-const CategoryItemUnit=({imageUrl,title})=>{
+const CategoryItemUnit=({imageUrl,title,catedoryId,categoryId})=>{
     return(
-       
+      <Link   to={`/cateogry/${catedoryId}/${categoryId}`}>
           <ListItemButton sx={{padding:"0",margin:"0",boxShadow:"rgba(0, 0, 0, 0.24) 0px 3px 8px"}}>
     <div style={{display:"inline-block!important"}} className='w-full '>
         <img src={imageUrl} alt={title} className='w-full object-contain'/>
@@ -64,6 +65,7 @@ const CategoryItemUnit=({imageUrl,title})=>{
 
     </div>
     </ListItemButton>
+    </Link>
     
     )
 }

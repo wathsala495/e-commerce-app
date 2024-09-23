@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../Firebase/firebase"
 import setDataDocument from "../dataFetch/setDataDocument";
 
-const userRegister=(email,password,name,address,phoneNumber,profileImage)=>{
+const userRegister=(email,password,name,gender,phoneNumber,address)=>{
 
     createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
@@ -13,7 +13,7 @@ const userRegister=(email,password,name,address,phoneNumber,profileImage)=>{
       address,
       email,
       phoneNumber,
-      profileImage,
+      gender,
       uid:user.uid,
       role:'user'
     }

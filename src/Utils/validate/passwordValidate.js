@@ -14,11 +14,13 @@ const passCharValidateFunction=(password=[],checkCharSet=[])=>{
       return state
 }
 
+let EnteredPassword;
 
 
 const passwordvalidate=(data,errormsg,error,submit)=>{
    console.log("pwvalidate")
    const password=String(data).split("")
+   EnteredPassword=data
    
    console.log(password)
 
@@ -61,4 +63,13 @@ const passwordvalidate=(data,errormsg,error,submit)=>{
       errormsg(['password must be at least 8 characters long'])
    }
 }
+
+export const confirmPasswordValidate=(data,errorMag,error,submit)=>{
+ if(EnteredPassword!==data){
+     error(true);
+     submit(false);
+     errorMag(['password does not match'])
+ }
+}
+
 export default passwordvalidate

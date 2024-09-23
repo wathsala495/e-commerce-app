@@ -14,6 +14,8 @@ const userDataValidate=(data,errorMsg,error,submit,type)=>{
 
      if(type==="address"){
         validChar=validChar.concat([...numberChar,'.','.','-','(',')'])
+     }else if(type==="phone"){
+      validChar=numberChar.concat(['-','','+'])
      }
      console.log('valid char',validChar)
 

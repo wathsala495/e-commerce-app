@@ -122,7 +122,7 @@ import { getAuth, signOut } from 'firebase/auth'
 import userLogin from '../../Utils/auth/login'
 import { useNavigate } from 'react-router-dom'
 import emailValidate from '../../Utils/validate/emailValidate'
-import passwordvalidate from '../../Utils/validate/passwordValidate'
+import passwordvalidate, { confirmPasswordValidate } from '../../Utils/validate/passwordValidate'
 import { genderData } from '../../Utils/data'
 import userDataValidate from '../../Utils/validate/userDataValidate'
 
@@ -221,15 +221,28 @@ const RegisterComonent=()=>{
   const registerHandle=(e)=>{
    e.preventDefault()
   //  const name=`${e.target[0].value}  ${e.target[1].value}`
+  const firstname=e.target["firstname"].value
+  const lasttname=e.target["lasttname"].value
+  const gender=e.target["gender"].value
+  const address=e.target["address"].value
+  const email=e.target["email"].value
+  const phone=e.target["phone"].value
+  const password=e.target["password"].value
+  const cpassword=e.target["cpassword"].value
+
+  const name=`${firstname} ${lasttname}`
   //  const email=e.target[2].value
   //  const address =e.target[3].value
   //  const password=e.target[4].value
   //  const cPassword=e.target[5].value
   //  const phoneNumber=e.target[6].value
   //  const profileImage=e.target[7].value
-   const gender = e.target["gender"].value
-  
-   console.log(gender)
+   
+  if(canSubmit && firstname && lasttname && gender && address && email && phone && password && cpassword){
+    userRegister(email,password,name,gender,phone,address)
+  }else{
+    console.log("can not submit")
+  }
   //  if(password===cPassword){
   //   userRegister(email,password,name,address,phoneNumber,profileImage)
   //  }
@@ -245,7 +258,7 @@ const RegisterComonent=()=>{
       placeholder="Your First Name" 
       label="First Name" 
       name="firstname"  
-      errorMsgBase="username " 
+      errorMsgBase="firstname " 
       setCanSubmit={setCanSubmit} 
       firebaseError={firebaseError} 
       setfirebaseError={setfirebaseError}/> 
@@ -254,7 +267,7 @@ const RegisterComonent=()=>{
       placeholder="Your Last Name" 
       label="Last Name" 
       name="lasttname"  
-      errorMsgBase="username " 
+      errorMsgBase="lastname " 
       setCanSubmit={setCanSubmit} 
       firebaseError={firebaseError} 
       setfirebaseError={setfirebaseError}/> 
@@ -375,10 +388,16 @@ const LoginInputBox=({inputType,placeholder,label,name,errorMsgBase,setCanSubmit
         errorMsgBase==='email'
         ?emailValidate(e.target.value,setErrmsg,setError) 
         :errorMsgBase==='password'
-        ?passwordvalidate(e.target.value,setErrmsg,setError,setCanSubmit)
+        ?passwordvalidate(e.target.value,setErrmsg,setError,setCanSubmit,errorMsgBase)
+        :errorMsgBase==='cpassword'
+        ?confirmPasswordValidate(e.target.value,setErrmsg,setError,setCanSubmit)
         :errorMsgBase==='address'
-        ?userDataValidate(e.target.value,setErrmsg,setError,setCanSubmit)
-        :()=>{}}  
+        ?userDataValidate(e.target.value,setErrmsg,setError,setCanSubmit,errorMsgBase)
+        :errorMsgBase==='phone'
+        ?userDataValidate(e.target.value,setErrmsg,setError,setCanSubmit,errorMsgBase)
+        :userDataValidate(e.target.value,setErrmsg,setError,setCanSubmit,label)
+        
+        }  
         
         className={`outline-none w-full ${error && "placeholder:text-red-500 text-red-500"} `} 
         type={inputType}  placeholder={placeholder} name={name}
